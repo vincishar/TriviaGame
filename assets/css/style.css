@@ -1,0 +1,23 @@
+h1 {
+    position: static; 
+    text-align: center;
+}
+
+p {
+    text-align: center;
+} 
+
+div {
+    text-align: center; 
+    background-color: white;
+}  
+
+body {
+   background-image: url("file:///Users/vincishar/Desktop/TriviaGame/assets/images/movie-themes.jpg")
+} 
+
+
+
+
+
+
