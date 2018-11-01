@@ -42,17 +42,23 @@ var myQuestions = [
 
 ];
 
-setTimeout(tenSeconds, 1000 * 10);  
+function showCountdown(){
+    seconds--;
+    $('#timeLeft').html('<h3Time Remaining:' + seconds + '</h3>')
+    if(seconds < 1){ 
+        clearInterval(time); 
+        answered = false;
+    }
 
-
+}  
 
 const output = []; 
 for (var i = 0; i < answer_space.length; i++) {
-    document.getElementById("q1").append(answer_space)
+    document.getElementById("q").append(answer_space)
     answer_space.innerHTML = answers
-    document.getElementById("q2").append(answer_space)
+    document.getElementById("q").append(answer_space)
     answer_space.innerHTML = answers
-    document.getElementById("q3").append(answer_space)
+    document.getElementById("q").append(answer_space)
     answer_space.innerHTML = answers
 
     // console.log(answers[i]) 
@@ -82,11 +88,7 @@ function showAnswers(answers) {
     var answerContainer = document.createElement("input");
     answerContainer.setAttribute("type", "radio");
     answerContainer.setAttribute("value", answers)  
-    var label = document.createElement("label") 
-    label.setAttribute("for",answers)
-    var answerTest = document.getElementById("answer")
-    answerTest.innerHTML = label;
-
+    
 
 
     var answerArray = answers.a.split(" ")
@@ -99,9 +101,14 @@ function showAnswers(answers) {
     document.getElementById("answer_space").append(answerContainer)   
 
 
+   if (i == 0) {document.getElementById('question_space').className = "q1";} 
+   if (i == 0) {document.getElementById('answer_space').className = "q1"; }
+   if (i == 1) {document.getElementById('question_space').className = "q2";} 
+   if (i == 1) {document.getElementById('answer_space').className = "q2";}
+   if (i == 2) {document.getElementById('question_space').className = "q3";} 
+   if ( i == 2) {document.getElementById('answer_space').className = "q3";}
+   
 
-
-     
 
 
 
@@ -163,7 +170,7 @@ submitButton.onclick = function () {
 
 $("#btn-begin").click(function () {
     showQuestions();
-    showAnswers(); 
+    
 });
 
 $("#submit").click(function () {
