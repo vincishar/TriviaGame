@@ -16,8 +16,10 @@ var myQuestions = [
             a: "Brandon Routh",
             b: "Henry Cavill",
             c: "Christopher Reeve",
-            d: "Tyler Hoechlin"   
-        }
+            d: "Tyler Hoechlin", 
+            correctAnswer: "b"
+        }, 
+        
     },
 
     {
@@ -26,8 +28,10 @@ var myQuestions = [
             a: "Christian Bale",
             b: "Ezra Miller",
             c: "Ben Affleck",
-            d: "Micheal Keaton"     
-        }
+            d: "Micheal Keaton",  
+            correctAnswer: "c"    
+        },   
+        
     },
 
     {
@@ -36,19 +40,32 @@ var myQuestions = [
             a: "Ezra Miller",
             b: "Grant Gustin",
             c: "John Shipp",
-            d: "Keiynan Lonsdale"  
-        }
+            d: "Keiynan Lonsdale",
+            correctAnswer: "a"
+        },  
+       
     }
 
 ];
-
+var seconds = 10
 function showCountdown(){
-    seconds--;
-    $('#timeLeft').html('<h3Time Remaining:' + seconds + '</h3>')
-    if(seconds < 1){ 
+    
+    $('#timeLeft').html('<h3>Time Remaining:' + seconds + '</h3>')
+    if(seconds < 1){  
+        alert("Time is up!")
         clearInterval(time); 
         answered = false;
     }
+else if ( seconds == 10 ) 
+
+{
+time = setInterval(function() {
+  showCountdown()
+  },1000)  
+
+
+}
+seconds--; 
 
 }  
 
@@ -76,68 +93,64 @@ function showQuestions() {
 
         var questionContainer = document.createElement("div");
         questionContainer.innerHTML = myQuestions[i].q
-        showAnswers(myQuestions[i].answers)
-
+        questionContainer.id = "q" + (i + 1)
         
-        document.getElementById("question_space").append(questionContainer)
+    
+        document.getElementById("question_space").append(questionContainer) 
+        questionContainer.innerHTML += "<br>"  
+        showAnswers(myQuestions[i].answers, "q" + (i + 1 ) ) 
     }
 };
 
-function showAnswers(answers) {
-    console.log(answers)
-    var answerContainer = document.createElement("input");
-    answerContainer.setAttribute("type", "radio");
-    answerContainer.setAttribute("value", answers)  
-    
+function showAnswers(answers, questionId) {
+    console.log(answers)  
+    var label = document.createElement("label")  
+    if (answers.correctAnswer == "a")  
+    label.className = "correct" 
+    label.innerHTML = answers.a
+    document.getElementById(questionId).append(label)
+    var radio = document.createElement("input");
+    radio.setAttribute("type", "radio");
+    radio.setAttribute("value", answers.a) 
+    radio.setAttribute("name", questionId + "-answer") 
+    document.getElementById(questionId).append(radio)  
 
+    var label = document.createElement("label") 
+    label.innerHTML = answers.b 
 
-    var answerArray = answers.a.split(" ")
-    var firstWord = answerArray[0].toLowerCase()
-    console.log(firstWord)
-    var secondWord = answerArray[1].toLowerCase()
-     var name = firstWord + secondWord
-     console.log(name)
-    answerContainer.setAttribute("id", name)
-    document.getElementById("answer_space").append(answerContainer)   
+    document.getElementById(questionId).append(label)
+    var radio = document.createElement("input");  
+    if (answers.correctAnswer == "b")  
+    label.className = "correct"
+    radio.setAttribute("type", "radio");
+    radio.setAttribute("value", answers.b) 
+    radio.setAttribute("name", questionId + "-answer")  
+    document.getElementById(questionId).append(radio)  
+     
+    var label = document.createElement("label") 
+    label.innerHTML = answers.c 
+    if (answers.correctAnswer == "c")  
+    label.className = "correct" 
+    document.getElementById(questionId).append(label)
+    var radio = document.createElement("input");
+    radio.setAttribute("type", "radio");
+    radio.setAttribute("value", answers.c) 
+    radio.setAttribute("name", questionId + "-answer")   
+    document.getElementById(questionId).append(radio)  
 
+    var label = document.createElement("label") 
+    label.innerHTML = answers.d   
+    if (answers.correctAnswer == "d")  
+    label.className = "correct" 
+    document.getElementById(questionId).append(label)
+    var radio = document.createElement("input");
+    radio.setAttribute("type", "radio");
+    radio.setAttribute("value", answers.d)  
+    radio.setAttribute("name", questionId + "-answer")  
+    document.getElementById(questionId).append(radio)  
 
-   if (i == 0) {document.getElementById('question_space').className = "q1";} 
-   if (i == 0) {document.getElementById('answer_space').className = "q1"; }
-   if (i == 1) {document.getElementById('question_space').className = "q2";} 
-   if (i == 1) {document.getElementById('answer_space').className = "q2";}
-   if (i == 2) {document.getElementById('question_space').className = "q3";} 
-   if ( i == 2) {document.getElementById('answer_space').className = "q3";}
-   
-
-
-
-
-
-    // document.getElementById
-    // $('input').val(answers)
-    // $('input:radio[name=cols]').val(['Site']);
-
-        // for (var i = 0; i < myQuestions.length; i++){ 
-        //     var answerContainer = document.createElement("INPUT") 
-        //     answerContainer.setAttribute("type", "radio"); 
-        //     answerContainer.setAttribute("value", myQuestions[i].answers)
-        //     document.getElementById("answer_space").append(answerContainer)
-        //     console.log(myQuestions[i].answers)
-        // }
-          
 }
-
-
-    // function answersSet(){
-    //     for(var i = 0; i < myAnswers.length; i++){
-    //         var answer =   myAnswers[i].a.b.c.d   
-
-    //         var answerContainer = document.createElement("div") 
-    //         answerContainer.innerHTML = answer 
-    //         document.getElementById("answer_space").append(answerContainer)
-    //     }
-
-    // }
+    
 
 
 
@@ -153,12 +166,7 @@ function buildQuiz() {
     //    }
 }
 function showResults() {
-    //    for(var i = 0; i < showResults.length; i++) { 
-    //       var results = results[i].correct
-
-    //       var resultContainer = document.createElement("div") 
-    //       resultContainer.innerHTML = results  
-    //       document.getElementById("results").append(resultContainer) 
+    $( ".correct" ).css( "border", "3px solid green" );
 }
 submitButton.onclick = function () {
     showResults(submitButton);
@@ -170,7 +178,7 @@ submitButton.onclick = function () {
 
 $("#btn-begin").click(function () {
     showQuestions();
-    
+    showCountdown()
 });
 
 $("#submit").click(function () {
